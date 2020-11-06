@@ -1,6 +1,10 @@
 package com.possible.dhis2int.date;
 
+import java.text.SimpleDateFormat;
+import java.time.Month;
+import java.time.Year;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.joda.time.DateTime;
@@ -144,9 +148,23 @@ public class DateConverter {
 	}
 	
 	public ReportDateRange getDateRange(Integer year, Integer month) {
-		int lastDay = daysInMonthMap.get(year)[month];
-		DateTime startDate = getEnglishDate(year, month, 1);
-		DateTime endDate = getEnglishDate(year, month, lastDay);
+     Calendar c = Calendar.getInstance();
+     c.set(year,month,1); //------>
+     c.getActualMinimum(Calendar.DAY_OF_MONTH);
+     c.getActualMaximum(Calendar.DAY_OF_MONTH);
+     Date date=java.util.Calendar.getInstance().getTime();
+     Date sDate =  c.getTime();
+		Calendar d = Calendar.getInstance();
+		d.set(year,month,c.getActualMaximum(Calendar.DAY_OF_MONTH));
+		Date eDate =  d.getTime();
+		DateTime endDate = new DateTime(eDate);
+		DateTime startDate = new DateTime(sDate);
+
+
+
+
+
+
 		return new ReportDateRange(startDate, endDate);
 	}
 	
